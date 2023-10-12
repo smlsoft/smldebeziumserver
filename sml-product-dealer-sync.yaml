@@ -3,6 +3,7 @@ version: '3.9'
 servics:
   image: ghcr.io/smlsoft/product-dealer-sync:sha-e35d0cf
   container_name: product_dealer_sync
+  restart: always
   expose:
     - 80
   ports:

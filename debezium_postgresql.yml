@@ -45,6 +45,7 @@ services:
   debezium_connect:
     image: quay.io/debezium/connect:2.1
     container_name: sml_debezium_connect
+    restart: always
     ports:
      - 8083:8083
     environment:

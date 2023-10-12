@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  smljavawebservice:
+    image: ghcr.io/smlsoft/smljavawebservice:3.6.3
+    container_name: smljavawebservice
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - /tomcat_temp:/usr/local/tomcat/temp
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true

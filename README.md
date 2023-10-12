@@ -7,10 +7,18 @@ docker create sml_service_network
 
 **Run PostgreSQL Server**
 
-docker compose -f sml-dealer-sync.yaml up -d 
+docker compose -f debezium_postgresql.yaml up -d 
 
+docker compose -f tomcat.yaml up -d 
+
+docker compose -f sml-product-dealer-sync.yaml up -d 
+
+docker compose -f sml-sale-sync.yaml up -d
+
+### Kafka UI
 
 docker compose -f kafka-ui.yaml up -d 
+
 
 ### Drop Replication
 
