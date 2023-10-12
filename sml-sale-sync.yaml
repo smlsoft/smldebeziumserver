@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  initial-sync:
+    image: ghcr.io/smlcloudplatform/smlpgconsumersyncinitial:sha-91af792
+    environment:
+      - DEBEZIUM_CONNECTOR_URI=http://sml_debezium_connect:8083
+      - POSTGRES_HOST=sml_debezium_postgresql
+      - POSTGRES_PORT=5432
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=sml
+      - POSTGRES_DB_NAME=branch1
+    networks: ["sml_service_network"]
+  smlpgconsumer:
+    image: ghcr.io/smlcloudplatform/smlpgconsumersync:sha-91af792
+    environment:
+      - LOG_LEVEL=debug
+      - KAFKA_SERVER_URL=kafka:9092
+      - POSTGRES_HOST=sml_debezium_postgresql
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=branch1
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=sml
+      - POSTGRES_SSL_MODE=disable
+      - POSTGRES_LOGGER_LEVEL=debug
+      - DEALER_API_URL=http://localhost:8888
+      - DEALER_API_APP_API_KEY=TOE999999
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true
