@@ -2,7 +2,7 @@
 
 **Create Docker Network**
 ```
-docker create sml_service_network
+docker network create sml_service_network
 ```
 
 **Run PostgreSQL Server**

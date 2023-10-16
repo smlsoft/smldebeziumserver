@@ -14,7 +14,7 @@ services:
     image: ghcr.io/smlcloudplatform/smlpgconsumersync:sha-91af792
     restart: always
     environment:
-      - LOG_LEVEL=debug
+      - LOG_LEVEL=error
       - KAFKA_SERVER_URL=kafka:9092
       - POSTGRES_HOST=sml_debezium_postgresql
       - POSTGRES_PORT=5432
@@ -22,8 +22,8 @@ services:
       - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=sml
       - POSTGRES_SSL_MODE=disable
-      - POSTGRES_LOGGER_LEVEL=debug
-      - DEALER_API_URL=http://<dealer-api-host>
+      - POSTGRES_LOGGER_LEVEL=error
+      - DEALER_API_URL=http://10.210.103.97
       - DEALER_API_APP_API_KEY=<dealer-api-key>
     networks: ["sml_service_network"]
 networks:
