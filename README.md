@@ -1,6 +1,6 @@
 # SML DEBEZium Server
 
-# TLDR; [How To Setup](Setup)
+# TLDR; [How To Setup](https://github.com/smlsoft/smldebeziumserver/blob/main/Setup.MD)
 
 **Create Docker Network**
 ```
