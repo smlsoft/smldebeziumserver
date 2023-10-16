@@ -25,3 +25,30 @@ docker compose -f kafka-ui.yaml up -d
 ```
 select pg_drop_replication_slot('debezium')  
 ```
+
+### Remove Server (Windows)
+
+```
+
+docker compose -f .\sml-sale-sync.yaml down
+
+docker compose -f .\sml-product-dealer-sync.yaml down 
+
+docker compose -f .\debezium_postgresql.yml down
+
+docker compose -f .\tomcat.yaml down
+```
+
+
+### Remove Server (Linux)
+
+```
+
+docker compose -f sml-sale-sync.yaml down
+
+docker compose -f sml-product-dealer-sync.yaml down 
+
+docker compose -f .\debezium_postgresql.yml down
+
+docker compose -f .\tomcat.yaml down
+```

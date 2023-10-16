@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   product_dealer_sync:
-    image: ghcr.io/smlsoft/product-dealer-sync:sha-e35d0cf
+    image: ghcr.io/smlsoft/product-dealer-sync:stable
     container_name: product_dealer_sync
     restart: always
     expose:
@@ -10,9 +10,9 @@ services:
     ports:
       - 8006:80
     environment:
-        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=<pwd>;Database=hangfire
-        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=<pwd>;Database=branch1
-        - PRODUCTDEALERAPI__APIKEY=<accesskey>
+        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
+        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
+        - PRODUCTDEALERAPI__APIKEY=${DEALER_API_KEY}
     networks: ["sml_service_network"]
     labels:
         - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`))"
