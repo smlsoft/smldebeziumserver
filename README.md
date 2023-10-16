@@ -1,5 +1,7 @@
 # SML DEBEZium Server
 
+# TLDR; [How To Setup](setup.md)
+
 **Create Docker Network**
 ```
 docker network create sml_service_network
