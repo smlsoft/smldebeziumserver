@@ -1,5 +1,14 @@
 
-## 1. Create .env File 
+## 1. clone server
+
+```
+git clone https://github.com/smlsoft/smldebeziumserver
+cd smldebeziumserver
+docker network create sml_service_network
+
+```
+
+## 2. Create .env File 
 
 ```
 SERVER_IP=0.0.0.0
@@ -8,16 +17,16 @@ PG_SML_DATABASE_NAME=data1
 DEALER_API_KEY=<dealer-api-key-here>
 ```
 
-## 2. Apply SML Server App
+## 3. Apply SML Server App
 
 ```
 docker compose -f tomcat.yaml up -d
 docker compose -f debezium_postgresql up -d
 ```
 
-## 3. Create Database `data1` in smlsoft
+## 4. Create Database `data1` in smlsoft
 
-## 4.  Apply Sync App
+## 5.  Apply Sync App
 
 ```
 
