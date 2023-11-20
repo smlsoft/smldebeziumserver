@@ -21,7 +21,7 @@ DEALER_API_KEY=<dealer-api-key-here>
 
 ```
 docker compose -f tomcat.yaml up -d
-docker compose -f debezium_postgresql up -d
+docker compose -f debezium_postgresql.yml up -d zookeeper kafka postgresql_11_debezium debezium_connect
 ```
 
 ## 4. Create Database `data1` in smlsoft
@@ -29,8 +29,6 @@ docker compose -f debezium_postgresql up -d
 ## 5.  Apply Sync App
 
 ```
-
-docker compose -f sml-product-dealer-sync.yaml up -d
-docker compose -f sml-sale-sync.yaml up -d
-
+docker compose -f debezium_postgresql.yml up -d zookeeper kafka postgresql_11_debezium
+docker compose -f debezium_postgresql.yml up -d product_dealer_sync initial-sync smlpgconsumer
 ```
