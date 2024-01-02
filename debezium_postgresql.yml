@@ -107,7 +107,7 @@ services:
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - POSTGRES_SSL_MODE=disable
       - POSTGRES_LOGGER_LEVEL=error
-      - DEALER_API_URL=http://10.210.103.97
+      - DEALER_API_URL=https://dealer-api-sml.dohome.co.th
       - DEALER_API_APP_API_KEY=${DEALER_API_KEY}
     networks: ["sml_service_network"]
     depends_on:
