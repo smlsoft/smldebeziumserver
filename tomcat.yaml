@@ -4,8 +4,10 @@ services:
     image: ghcr.io/smlsoft/smljavawebservice:3.6.5
     container_name: smljavawebservice
     restart: always
-    ports:
-      - 8080:8080
+    expose:
+      - 8080
+    #ports:
+    #  - 8080:8080
     volumes:
       - /tomcat_temp:/usr/local/tomcat/temp
     networks: ["sml_service_network"]
