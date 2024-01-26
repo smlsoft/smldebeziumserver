@@ -29,18 +29,22 @@ bash setupwebservice.sh
 
 ```shell
 
-cd /data/smldebeziumserver/postgresql_debezium
+cd /data/smldebeziumserver/
 
 # change kafka ip
-sudo sed -i -e "s/EDIT_KAFKA_HOST/192.168.2.xx/g" test-replace.yml
+# sudo sed -i -e "s/EDIT_KAFKA_HOST/192.168.2.xx/g" test-replace.yml
+sudo bash replace_cluster_ip.sh
 
 # change database name
-sudo sed -i -e "s/EDIT_DATABASE_NAME/data1/g" test-replace.yml
+#sudo sed -i -e "s/EDIT_DATABASE_NAME/data1/g" test-replace.yml
+sudo bash replace_databasename.bash
 
 # change dealer api key
-sudo sed -i -e "s/EDIT_DEALER_API_KEY/0000000000/g" test-replace.yml
+#sudo sed -i -e "s/EDIT_DEALER_API_KEY/0000000000/g" test-replace.yml
+sudo bash replace_dealer_code.bash
 
 # start database
+cd /data/smldebeziumserver/postgresql_debezium
 
 sudo docker compose up -d sml_debezium_postgresql
 ```
