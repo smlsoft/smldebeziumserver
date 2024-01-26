@@ -3,15 +3,19 @@ services:
   kafka_ui:
     image: provectuslabs/kafka-ui:latest
     # restart: always
-    ports:
-      - 9000:8080
+    expose:
+      - 8080
+    #ports:
+    #  - 9000:8080
     environment:
       - KAFKA_CLUSTERS_0_NAME=debezium-kafka
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
       - SERVER_SERVLET_CONTEXT_PATH=/kafkaui
+    labels:
+      - "traefik.http.routers.kafkaui.rule=(PathPrefix(`/kafkaui`))"
     networks: ["sml_service_network"]
 networks:
   sml_service_network:
     name: sml_service_network
-    external: true  
+    external: true

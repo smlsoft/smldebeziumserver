@@ -1,5 +1,19 @@
 version: '3.9'
+
 services:
+  sml_debezium_postgresql:
+    image: smlsoft/postgres:11-debezium
+    container_name: sml_debezium_postgresql
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: sml
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks: ["sml_service_network"]
   zookeeper:
     image: bitnami/zookeeper:3.7
     container_name: zookeeper
@@ -24,25 +38,14 @@ services:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://${SERVER_IP}:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://EDIT_KAFKA_HOST:9093
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
     depends_on:
       - zookeeper
     volumes:
-      - ./kafka-persistence:/bitnami/kafka
+      - ./kafka:/bitnami/kafka
     networks: ["sml_service_network"]
-  postgresql_11_debezium:
-    image: smlsoft/postgres:11-debezium
-    container_name: sml_debezium_postgresql
-    ports:
-      - 5432:5432
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    networks: ["sml_service_network"]
-  debezium_connect:
+  sml_debezium_connect:
     image: quay.io/debezium/connect:2.1
     container_name: sml_debezium_connect
     restart: always
@@ -58,64 +61,41 @@ services:
     depends_on:
       - zookeeper
       - kafka
-      - postgresql_11_debezium
-  product_dealer_sync:
-    image: ghcr.io/smlsoft/product-dealer-sync:stable
-    container_name: product_dealer_sync
-    restart: always
-    expose:
-      - 80
-    ports:
-      - 8006:80
-    environment:
-        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
-        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
-        - PRODUCTDEALERAPI__APIKEY=${DEALER_API_KEY}
-    networks: ["sml_service_network"]
-    labels:
-        - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`))"
-    depends_on:
-      - zookeeper
-      - kafka
-      - postgresql_11_debezium
-      - debezium_connect
-  initial-sync:
+      - sml_debezium_postgresql
+  initial_consumer:
     image: ghcr.io/smlcloudplatform/smlpgconsumersyncinitial:stable
+    container_name: initial_consumer
+    restart: always
     environment:
       - DEBEZIUM_CONNECTOR_URI=http://sml_debezium_connect:8083
       - POSTGRES_HOST=sml_debezium_postgresql
       - POSTGRES_PORT=5432
       - POSTGRES_USERNAME=postgres
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
-      - POSTGRES_DB_NAME=${PG_SML_DATABASE_NAME}
+      - POSTGRES_PASSWORD=sml
+      - POSTGRES_DB_NAME=EDIT_DATABASE_NAME
     networks: ["sml_service_network"]
     depends_on:
-      - zookeeper
-      - kafka
-      - postgresql_11_debezium
-      - debezium_connect
+      - sml_debezium_connect
   smlpgconsumer:
     image: ghcr.io/smlcloudplatform/smlpgconsumersync:stable
+    container_name: smlpgconsumer
     restart: always
     environment:
       - LOG_LEVEL=error
       - KAFKA_SERVER_URL=kafka:9092
       - POSTGRES_HOST=sml_debezium_postgresql
       - POSTGRES_PORT=5432
-      - POSTGRES_DB_NAME=${PG_SML_DATABASE_NAME}
+      - POSTGRES_DB_NAME=EDIT_DATABASE_NAME
       - POSTGRES_USERNAME=postgres
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_PASSWORD=sml
       - POSTGRES_SSL_MODE=disable
       - POSTGRES_LOGGER_LEVEL=error
       - DEALER_API_URL=https://dealer-api-sml.dohome.co.th
-      - DEALER_API_APP_API_KEY=${DEALER_API_KEY}
+      - DEALER_API_APP_API_KEY=EDIT_DEALER_API_KEY
     networks: ["sml_service_network"]
     depends_on:
-      - zookeeper
-      - kafka
-      - postgresql_11_debezium
-      - debezium_connect
-      - initial-sync
+      - sml_debezium_connect
+      - initial_consumer
 networks:
   sml_service_network:
     name: sml_service_network

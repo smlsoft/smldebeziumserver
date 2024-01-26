@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  smljavawebservice:
+    image: ghcr.io/smlsoft/smljavawebservice:3.5.6
+    restart: always
+    expose:
+      - 8080
+    volumes:
+      - ../tomcat/temp:/usr/local/tomcat/temp
+    labels:
+      # - "traefik.http.routers.smljavawebservice.rule=(Host(`host.com`) && PathPrefix(`/SMLJavaWebService`))"
+      - "traefik.http.routers.smljavawebservice.rule=(PathPrefix(`/SMLJavaWebService`))"
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true

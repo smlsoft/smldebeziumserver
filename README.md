@@ -1,76 +1,86 @@
-# SML DEBEZium Server
+# SML DEBEZIUM SERVER
 
-# TLDR; [How To Setup](https://github.com/smlsoft/smldebeziumserver/blob/main/Setup.MD)
 
-**Create Docker Network**
-```
-docker network create sml_service_network
-```
-
-## 2. Create .env File 
-
-```
-SERVER_IP=0.0.0.0
-PG_PASSWORD=sml
-PG_SML_DATABASE_NAME=data1
-DEALER_API_KEY=0000000
-```
-
-## 3. Setup Tomcat
+## 1. Clone
+```shell
+sudo mkdir /data
+cd /data
+git clone https://github.com/smlsoft/smldebeziumserver
+cd smldebeziumserver
 
 ```
-docker compose -f tomcat.yaml up -d
+
+## 2. Setup Docker
+```shell
+bash dockerinstall.sh
 ```
 
-## 4. Setup Traefik
-```
-docker compose -f traefik.yaml up -d
-```
-
-## 5. Setup PostgreSQL Server
-```
-docker compose -f debezium_postgresql.yml up -d postgresql_11_debezium
+## 3. Create Docker Network
+```shell
+sudo docker network create sml_service_network
 ```
 
-## 6. Create Database `data1` in smlsoft
-
-## 7. Setup Connector
-
-```
-docker compose -f debezium_postgresql.yml up -d zookeeper kafka debezium_connect
+## 3. Setup SML Web Service
+```shell
+bash setupwebservice.sh
 ```
 
-## 8. Setup Sync
-```
-docker compose -f debezium_postgresql.yml up -d product_dealer_sync initial-sync smlpgconsumer
-```
+## 4. Setup Dataase
 
-## เพิ่มเติม
+```shell
 
-### Kafka UI
+cd /data/smldebeziumserver/postgresql_debezium
 
-docker compose -f kafka-ui.yaml up -d 
+# change kafka ip
+sudo sed -i -e "s/EDIT_KAFKA_HOST/192.168.2.xx/g" test-replace.yml
 
+# change database name
+sudo sed -i -e "s/EDIT_DATABASE_NAME/data1/g" test-replace.yml
 
-### Drop Replication
+# change dealer api key
+sudo sed -i -e "s/EDIT_DEALER_API_KEY/0000000000/g" test-replace.yml
 
-```
-select pg_drop_replication_slot('debezium')  
-```
+# start database
 
-### Remove Server (Windows)
-
-```
-docker compose -f .\debezium_postgresql.yml down
-
-docker compose -f .\tomcat.yaml down
+sudo docker compose up -d sml_debezium_postgresql
 ```
 
+## 5. Create Database in SML Account
 
-### Remove Server (Linux)
++ Login In SML Account
+
++ Create Database: data1
+
+
+## 6. Start Sync System
+
+```shell
+sudo docker compose up -d zookeeper kafka
+
+sudo docker compose up -d sml_debezium_connect
+
+sudo docker compose up -d initial_consumer smlpgconsumer
 
 ```
-docker compose -f .\debezium_postgresql.yml down
 
-docker compose -f .\tomcat.yaml down
+## 7. Setup Kafka UI
+
+```shell
+cd /data/smldebeziumserver/kafkaui
+sudo docker compose up -d
 ```
+
+## 8. Setup PostgreSQL Auto Backup
+
+```shell
+cd /data/smldebeziumserver/backups
+sudo docker compose up -d
+```
+
+## 9. Setup pgAdmin4
+
+```shell
+cd /data/smldebeziumserver/pgadmin4
+sudo docker compose up -d
+```
+

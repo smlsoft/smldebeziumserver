@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  postgresql_backup:
+    image: ghcr.io/smlsoft/smlpgbackup:11
+    container_name: sml_postgresql_autobackup
+    restart: always
+    volumes:
+      - ./backups:/var/lib/postgresql/backups
+    environment:
+      - BACKUPHOUR=23
+      - BACKUPMINUTE=0
+      - PGHOST=sml_postgresql
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true

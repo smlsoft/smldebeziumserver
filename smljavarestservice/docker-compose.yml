@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  smljavarestservice:
+    image: smlsoft/smljavarestservice:3.3.14
+    expose:
+      - 8080
+    volumes:
+      - ../tomcat/temp:/usr/local/tomcat/temp
+    labels:
+      # - "traefik.http.routers.smljavawebservice.rule=(Host(`host.com`) && PathPrefix(`/SMLJavaWebService`))"
+      - "traefik.http.routers.smljavarestservice.rule=(PathPrefix(`/SMLJavaRESTService`))"
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true
