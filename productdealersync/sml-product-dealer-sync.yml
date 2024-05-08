@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   product_dealer_sync:
-    image: ghcr.io/smlsoft/product-dealer-sync:stable
+    image: ghcr.io/smlsoft/product-dealer-sync:sha-4b010e4
     container_name: product_dealer_sync
     restart: always
     expose:
@@ -10,9 +10,12 @@ services:
     ports:
       - 8006:80
     environment:
-        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
-        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=${PG_PASSWORD};Database=${PG_SML_DATABASE_NAME}
-        - PRODUCTDEALERAPI__APIKEY=${DEALER_API_KEY}
+        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
+        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
+        - DOMARINEPRODUCTAPI__URI=https://api-public.dohome.technology
+        - DOMARINEPRODUCTAPI__DEALERID=EDIT_DEALER_API_KEY
+        - DOMARINEPRODUCTAPI__APIKEY=marine
+        - DOMARINEPRODUCTAPI__APISECRET=D0h0m3*mar1ne
     networks: ["sml_service_network"]
     labels:
         - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`))"
