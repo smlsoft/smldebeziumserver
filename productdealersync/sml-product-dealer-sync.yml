@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   product_dealer_sync:
-    image: ghcr.io/smlsoft/product-dealer-sync:sha-4b010e4
+    image: ghcr.io/smlsoft/product-dealer-sync:stable
     container_name: product_dealer_sync
     restart: always
     expose:
