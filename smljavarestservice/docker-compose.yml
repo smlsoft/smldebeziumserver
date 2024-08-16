@@ -2,6 +2,7 @@ version: '3.9'
 services:
   smljavarestservice:
     image: smlsoft/smljavarestservice:3.3.14
+    restart: always
     expose:
       - 8080
     volumes:
