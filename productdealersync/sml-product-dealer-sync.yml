@@ -18,7 +18,7 @@ services:
         - DOMARINEPRODUCTAPI__APISECRET=D0h0m3*mar1ne
     networks: ["sml_service_network"]
     labels:
-        - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`))"
+        - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`) || PathPrefix(`/productsync`))"
 networks:
   sml_service_network:
     name: sml_service_network
