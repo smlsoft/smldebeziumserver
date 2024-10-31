@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  smldatasync:
+    image: ghcr.io/smlcloudplatform/smldatasync:develop
+    container_name: smldatasync
+    restart: always
+    environment:
+      - LOG_LEVEL=debug
+#      - KAFKA_SERVER_URL=kafka:9092
+      - POSTGRES_HOST=sml_debezium_postgresql
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=data1
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=sml
+      - POSTGRES_SSL_MODE=disable
+      - POSTGRES_LOGGER_LEVEL=error
+      - DEALER_API_URL=http://dealer-api-sml.dohome.co.th
+      - DEALER_API_APP_API_KEY=100000007
+    networks: ["sml_service_network"]
+#    depends_on:
+#      - sml_debezium_connect
+#      - initial_consumer
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true
