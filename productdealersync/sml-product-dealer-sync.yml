@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   product_dealer_sync:
-    image: ghcr.io/smlsoft/product-dealer-sync:sha-4b010e4
+    image: ghcr.io/smlsoft/product-dealer-sync:develop
     container_name: product_dealer_sync
     restart: always
     expose:
@@ -18,7 +18,7 @@ services:
         - DOMARINEPRODUCTAPI__APISECRET=D0h0m3*mar1ne
     networks: ["sml_service_network"]
     labels:
-        - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`))"
+        - "traefik.http.routers.productsync.rule=(PathPrefix(`/productsyncdashboard`) || PathPrefix(`/productsync`))"
 networks:
   sml_service_network:
     name: sml_service_network
