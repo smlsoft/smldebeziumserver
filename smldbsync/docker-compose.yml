@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  smldatasync:
+    image: ghcr.io/smlcloudplatform/smldbsync:develop
+    container_name: smldbsync
+    restart: always
+    environment:
+    networks: ["sml_service_network"]
+networks:
+  sml_service_network:
+    name: sml_service_network
+    external: true
