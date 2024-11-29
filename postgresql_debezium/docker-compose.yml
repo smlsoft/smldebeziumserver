@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   sml_postgresql:
-    image: smlsoft/postgres:11-debezium
+    image: smlsoft/postgres:11
     container_name: sml_postgresql
     expose:
       - 5432
