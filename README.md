@@ -46,7 +46,7 @@ sudo bash replace_dealer_code.bash
 # start database
 cd /data/smldebeziumserver/postgresql_debezium
 
-sudo docker compose up -d sml_debezium_postgresql
+sudo docker compose up -d
 ```
 
 ## 5. Create Database in SML Account
@@ -55,36 +55,38 @@ sudo docker compose up -d sml_debezium_postgresql
 
 + Create Database: data1
 
-
-## 6. Start Sync System
-
-```shell
-sudo docker compose up -d zookeeper kafka
-
-sudo docker compose up -d sml_debezium_connect
-
-sudo docker compose up -d initial_consumer smlpgconsumer
-
-```
-
-## 7. Setup Kafka UI
-
-```shell
-cd /data/smldebeziumserver/kafkaui
-sudo docker compose up -d
-```
-
-## 8. Setup PostgreSQL Auto Backup
+## 6. Setup PostgreSQL Auto Backup
 
 ```shell
 cd /data/smldebeziumserver/backups
 sudo docker compose up -d
 ```
 
-## 9. Setup pgAdmin4
+## 7. Setup pgAdmin4
 
 ```shell
 cd /data/smldebeziumserver/pgadmin4
 sudo docker compose up -d
 ```
 
+## 8. Setup Product Dealer Sync
+
+```shell
+cd /data/smldebeziumserver/productdealersync
+sudo docker compose up -d
+```
+
+## 9. Setup SML Data Sync
+
+```shell
+cd /data/smldebeziumserver/smldatasync
+sudo docker compose up -d
+```
+
+
+## 9. Setup SML DB Sync
+
+```shell
+cd /data/smldebeziumserver/smldbsync
+sudo docker compose up -d
+```

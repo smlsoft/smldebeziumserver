@@ -6,6 +6,16 @@ services:
     container_name: smldbsync
     restart: always
     environment:
+      - LOG_LEVEL=debug
+      - POSTGRES_HOST=sml_debezium
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB_NAME=data1
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=sml
+      - POSTGRES_SSL_MODE=disable
+      - POSTGRES_LOGGER_LEVEL=error
+      - DEALER_API_URL=http://dealer-api-sml.dohome.co.th
+      - DEALER_API_APP_API_KEY=EDIT_DEALER_API_KEY      
     networks: ["sml_service_network"]
 networks:
   sml_service_network:

@@ -10,8 +10,8 @@ services:
     ports:
       - 8006:80
     environment:
-        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
-        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_debezium_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
+        - CONNECTIONSTRINGS__JOBMANAGERCONNECTION=Host=sml_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
+        - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
         - DOMARINEPRODUCTAPI__URI=https://api-public.dohome.technology
         - DOMARINEPRODUCTAPI__DEALERID=EDIT_DEALER_API_KEY
         - DOMARINEPRODUCTAPI__APIKEY=marine

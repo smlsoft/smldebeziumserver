@@ -36,7 +36,7 @@ docker compose -f debezium_postgresql.yml up -d postgresql_11_debezium
 
 ## 6. Create Database `data1` in smlsoft
 
-Postgresql Server Name : `sml_debezium_postgresql:5432`
+Postgresql Server Name : `sml_postgresql:5432`
 
 ## 7. Setup Connector
 

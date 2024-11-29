@@ -8,7 +8,7 @@ services:
     environment:
       - LOG_LEVEL=debug
 #      - KAFKA_SERVER_URL=kafka:9092
-      - POSTGRES_HOST=sml_debezium_postgresql
+      - POSTGRES_HOST=sml_postgresql
       - POSTGRES_PORT=5432
       - POSTGRES_DB_NAME=data1
       - POSTGRES_USERNAME=postgres
