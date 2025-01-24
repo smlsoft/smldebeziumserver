@@ -15,7 +15,8 @@ services:
       - POSTGRES_SSL_MODE=disable
       - POSTGRES_LOGGER_LEVEL=error
       - DEALER_API_URL=http://dealer-api-sml.dohome.co.th
-      - DEALER_API_APP_API_KEY=EDIT_DEALER_API_KEY      
+      - DEALER_API_APP_API_KEY=EDIT_DEALER_API_KEY
+      - SYNCTABLES=ar_customer_detail,ar_dealer,coupon_list,ic_inventory_barcode,ic_inventory_price_formula,ic_promotion,ic_promotion_detail,ic_promotion_formula,ic_promotion_formula_action,ic_promotion_formula_group_qty,ic_promotion_formula_price_discount,ic_unit_use
     networks: ["sml_service_network"]
 networks:
   sml_service_network:
