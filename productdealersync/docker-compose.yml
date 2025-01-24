@@ -14,6 +14,7 @@ services:
         - CONNECTIONSTRINGS__SMLCONNECTION=Host=sml_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
         - CONNECTIONSTRINGS__SMLDATATESTCONNECTION=Host=sml_postgresql;Port=5432;Username=postgres;Password=sml;Database=EDIT_DATABASE_NAME
         - SMLCENTERAPI__URI=https://dealer-api-sml.dohome.co.th/smlmarinecenter/api/v1/
+        - SMLCENTERAPI__DEALERCODE=EDIT_DEALER_API_KEY
         - DOMARINEPRODUCTAPI__URI=https://api-public.dohome.technology
         - DOMARINEPRODUCTAPI__DEALERID=EDIT_DEALER_API_KEY
         - DOMARINEPRODUCTAPI__APIKEY=marine
